@@ -14,7 +14,7 @@ block content
           .card.card-primary
             .card-block
               h2.card-title Opening hours
-              each Time in location.openingTimes
+              each Time in location.openningTimes
                   p.card-text|#{Time.days}:
                     if Time.closed
                       |  closed
@@ -37,7 +37,7 @@ block content
         .col-12
           .card.card-primary.review-card
             .card-block
-              a.btn.btn-primary.float-right(href='/locations/review/new') Add Review
+              a.btn.btn-primary.float-right(href=`/locations/${location._id}/review/new`) Add Review
               h2.card-title Customer reviews
               each review in location.reviews
                 .row.review
@@ -47,7 +47,8 @@ block content
                       | &nbsp;
                     span.reviewAuthor #{review.author}
                     | &nbsp;
-                    small.reviewTimestamp #{review.timestamp}
+                    small.reviewTimestamp
+                      +formatDate(review.createdOn)
                   .col-12
                     p= review.reviewText
     .col-12.col-lg-3

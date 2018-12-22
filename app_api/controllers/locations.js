@@ -12,7 +12,7 @@ const locationsCreate = (req, res) => {
         type: "Point",
         coordinates: [req.body.lng, req.body.lat]
       },
-      openingTimes: [
+      openningTimes: [
         {
           days: req.body.days1,
           opening: req.body.opening1,
@@ -24,6 +24,12 @@ const locationsCreate = (req, res) => {
           opening: req.body.opening2,
           closing: req.body.closing2,
           closed: req.body.closed2
+        },
+        {
+          days: req.body.days3,
+          opening: req.body.opening3,
+          closing: req.body.closing3,
+          closed: req.body.closed3
         }
       ]
     },
@@ -52,7 +58,7 @@ const locationsListByDistance = async (req, res) => {
     maxDistance: 20000,
     limit: 10
   };
-  if (!lng || !lat) {
+  if ((!lng && lng !==0) || (!lat && lat !== 0)) {
     return res.status(404).json({
       message: "lng and lat query parameters are required"
     });
@@ -75,7 +81,7 @@ const locationsListByDistance = async (req, res) => {
         address: result.address,
         rating: result.rating,
         facilities: result.facilities,
-        distance: `${result.distance.calculated.toFixed()}m`
+        distance: `${result.distance.calculated.toFixed()}`
       };
     });
     res.status(200).json(locations);
@@ -118,7 +124,7 @@ const locationsUpdateOne = (req, res) => {
       location.address = req.body.address;
       location.facilities = req.body.facilities.split(",");
       location.coords = [parseFloat(req.body.lng), parseFloat(req.body.lat)];
-      location.openingTimes = [
+      location.openningTimes = [
         {
           days: req.body.days1,
           opening: req.body.opening1,

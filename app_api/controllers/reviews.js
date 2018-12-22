@@ -40,11 +40,12 @@ const doAddReview = (req, res, location) => {
     //second par location is saved location
     location.save((err, location) => {
       if (err) {
+        console.log(err);
         res.status(400).json(err);
       } else {
         updateAverageRating(location._id);
         const thisReview = location.reviews.slice(-1).pop();
-        res.status(200).json(thisReview);
+        res.status(201).json(thisReview);
       }
     });
   }

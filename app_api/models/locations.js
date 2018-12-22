@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 //Mongoose Schema for all data
-const openingTimeSchema = new mongoose.Schema({
+const openningTimeSchema = new mongoose.Schema({
   days: { type: String, required: true },
   opening: String,
   closing: String,
@@ -11,14 +11,19 @@ const openingTimeSchema = new mongoose.Schema({
 });
 //
 const reviewSchema = new mongoose.Schema({
-  author: String,
+  author: {
+    type: String,
+    required: true
+  },
   rating: {
     type: Number,
-    required:true,
+    required: true,
     min: 0,
     max: 5
   },
-  reviewText: String,
+  reviewText: {
+    type: String
+  },
   createdOn: { type: Date, default: Date.now }
 });
 
@@ -38,19 +43,19 @@ const locationSchema = new mongoose.Schema({
   facilities: [String],
   //mongoose example for GeoJSON(Point) object Schema
   coords: {
-    type:{
-      type:String,
-      enum:['Point'],
+    type: {
+      type: String,
+      enum: ["Point"],
       required: true
     },
-    coordinates:{
-      type:[Number],
+    coordinates: {
+      type: [Number]
     }
   },
-  openingTimes: [openingTimeSchema],
+  openningTimes: [openningTimeSchema],
   reviews: [reviewSchema]
 });
 //2dsphere support for GeoJSON longitude and latitude cooords pairs
 locationSchema.index({ coords: "2dsphere" });
 //Compile schema into model for application
-mongoose.model('Location', locationSchema);
+mongoose.model("Location", locationSchema);
